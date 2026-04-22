@@ -1,16 +1,21 @@
 name: UsingSecretsDemo
 
 on:
-push:
-branches: [ "main" ]
+  push:
+    branches: ["main"]
 
 jobs:
-demo:
-runs-on: ubuntu-latest
+  demo:
+    runs-on: ubuntu-latest
 
-steps:
-- name: Checkout repository
-uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-- name: Access secret value
-run: echo "The secret key is ${{ secrets.MY_SECRET_KEY }}"
+      - name: Use secret safely
+        env:
+          SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}
+        run: |
+          echo "Secret is being used safely"
+          echo "Accessing secret from environment variable"
+          echo "Value is: $SECRET_KEY"
